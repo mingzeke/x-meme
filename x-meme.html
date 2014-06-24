@@ -64,7 +64,6 @@ The meme element for modern web. [**Live demo**](../x-meme/demo.html)
         right: 0px;
       }
       #memeImage {
-        z-index: -1;
         border: 0px;
         margin: 0px;
         text-align: center;
@@ -165,7 +164,7 @@ The meme element for modern web. [**Live demo**](../x-meme/demo.html)
 
        ready: function() {
         if (!this.src) {
-          this.img = 'images/' + this.type.toLowerCase() + '.jpg';
+          this.img = 'http://karan.github.io/x-meme/components/x-meme/images/' + this.type.toLowerCase() + '.jpg';
         } else {
           this.img = this.src;
         }
