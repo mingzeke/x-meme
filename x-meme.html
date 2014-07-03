@@ -20,7 +20,7 @@ The meme element for modern web. [**Live demo**](../x-meme/demo.html)
 @status alpha
 @homepage http://karan.github.io/x-meme
 -->
-<polymer-element name="x-meme" attributes="type src top bottom uppercase style">
+<polymer-element name="x-meme" attributes="type src top bottom uppercase scaletofit">
 
   <template>
 
@@ -74,7 +74,7 @@ The meme element for modern web. [**Live demo**](../x-meme/demo.html)
     <content>
       <div id="meme">
         <div id="topCaption">{{top}}</div>
-        <div id="memeImage" style="{{ style.cssText }}"><img id="memeimg" src="{{img}}" on-load="{{imageLoaded}}" style="{{ style.cssText }}"></div>
+        <div id="memeImage"><img id="memeimg" src="{{img}}" on-load="{{imageLoaded}}"></div>
         <div id="bottomCaption">{{bottom}}</div>
       </div>
     </content>
@@ -163,10 +163,33 @@ The meme element for modern web. [**Live demo**](../x-meme/demo.html)
        uppercase: true,
 
        ready: function() {
-        this.img = this.src || this.resolvePath('images/' + this.type.toLowerCase() + '.jpg');
+        this.img = this.src || (this.type ? this.resolvePath('images/' + this.type.toLowerCase() + '.jpg') : '');
         if (this.uppercase == true) {
           this.top = this.top.toUpperCase();
           this.bottom = this.bottom.toUpperCase();
+        }
+        this.scaletofitChanged();
+      },
+
+       scaletofitChanged: function() {
+        switch ((this.scaletofit || '').toString()) {
+          case "width":
+            this.style.cssText = 'width:100%';
+            this.$.memeImage.setAttribute('style', 'width:100%');
+            this.$.memeimg.setAttribute('style', 'width:100%');
+            break;
+
+          case "height":
+            this.style.cssText = 'height:100%';
+            this.$.memeImage.setAttribute('style', 'height:100%');
+            this.$.memeimg.setAttribute('style', 'height:100%');
+            break;
+
+          default:
+            this.style.cssText = '';
+            this.$.memeImage.removeAttribute('style');
+            this.$.memeimg.removeAttribute('style');
+            break;
         }
       }
     });
